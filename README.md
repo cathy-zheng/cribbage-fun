@@ -1,2 +1,2 @@
-# cribbage-fun
+# Cribbage Fun
 Let's play cribbage!
