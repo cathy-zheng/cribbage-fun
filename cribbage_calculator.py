@@ -3,7 +3,20 @@ import operator
 import itertools
 import collections
 
+class TooManyArgumentsException(Exception):
+    pass
+
+def limit_args(n):
+    def limit_decorator(f):
+        def new_f(*args, **kwargs):
+            if len(args) > n:
+                raise TooManyArgumentsException("%d args accepted at most, %d args passed" % (n, len(args)))
+            return f(*args, **kwargs)
+        return new_f
+    return limit_decorator
+
 # Points calculator
+@limit_args(5)
 def cribbage_points_calculator(card1,card2,card3,card4,*args):
     hand = [card1,card2,card3,card4] + [arg for arg in args]
     points = 0
@@ -61,6 +74,14 @@ def cribbage_points_calculator(card1,card2,card3,card4,*args):
         print(f'{multiplier} runs of {len(run)} for {len(run) * multiplier}')
     
     # Calculate for Jack
+    if len(hand) == 5:
+        for i in range(4):
+            if (hand[i][0] == hand[4][0]) and (hand[i][1] == 'J'):
+                points += 1
+                print('One for the nob.')
+    
+    print(f'Total points: {points}')
+
 
 
 
