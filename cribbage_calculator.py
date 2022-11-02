@@ -41,8 +41,28 @@ def cribbage_points_calculator(card1,card2,card3,card4,*args):
             continue
     
     # Calculate for runs
+    sorted_nums = sorted(nums)
+    run = []
+    run_dict = {}
+    for i in sorted_nums:
+        run_dict[i] = 1
+    for num in sorted_nums:
+        if (len(run) == 0) or (run[-1] == num - 1):
+            run.append(num)
+        elif (run[-1] == num) and num in run:
+            run_dict[num] += 1
+        else:
+            continue
+    multiplier = 1
+    for val in run_dict.values():
+        multiplier *= val
+    if len(run) >= 3:
+        points += len(run) * multiplier
+        print(f'{multiplier} runs of {len(run)} for {len(run) * multiplier}')
     
-    print(points)
+    # Calculate for Jack
 
 
-cribbage_points_calculator(('Heart','5'),('Diamond','10'),('Heart','10'),('Club','10'))
+
+
+cribbage_points_calculator(('Diamond','5'),('Heart','4'),('Club','4'),('Club','3'),('Diamond','3'))
