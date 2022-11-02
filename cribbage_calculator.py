@@ -20,8 +20,7 @@ def limit_args(n):
 def cribbage_points_calculator(card1,card2,card3,card4,*args):
     hand = [card1,card2,card3,card4] + [arg for arg in args]
     points = 0
-    suits = [x[0] for x in hand]
-    nums = [int(x[1]) for x in hand]
+    nums = [int(x[1]) if x[1].isdigit() else 10 for x in hand]
     num_dict = collections.Counter(nums)
     i = 2
     all_combo=[]
@@ -82,8 +81,3 @@ def cribbage_points_calculator(card1,card2,card3,card4,*args):
     
     print(f'Total points: {points}')
 
-
-
-
-
-cribbage_points_calculator(('Diamond','5'),('Heart','4'),('Club','4'),('Club','3'),('Diamond','3'))
